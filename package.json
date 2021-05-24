@@ -1,0 +1,16 @@
+{
+  "name": "CommandTranslator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev src/main.ts"
+  },
+  "author": "henansong <github@nansenho.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0"
+  }
+}
