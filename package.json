@@ -8,9 +8,11 @@
   "author": "henansong <github@nansenho.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "3.0.2"
+    "commander": "3.0.2",
+    "md5": "^2.3.0"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.0",
     "@types/node": "^15.6.0"
   }
 }
