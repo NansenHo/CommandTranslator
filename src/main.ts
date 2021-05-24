@@ -19,8 +19,6 @@ export const translate = (word) => {
         sign: sign
     });
 
-    return;
-
     const options = {
         hostname: 'api.fanyi.baidu.com',
         port: 443,
