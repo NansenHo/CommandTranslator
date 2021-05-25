@@ -3,6 +3,28 @@ import * as querystring from 'querystring';
 import md5 = require('md5');
 import {appId, appSecret} from './private';
 
+const errorMap = {
+    52003: '用户认证失败',
+    52004: 'error2',
+    52005: 'error3',
+    52006: 'error4',
+    unknown: '服务器繁忙'
+};
+
+// const associationMap = {
+//     regionIds: ['region', 'region1Id', 'region2Id', 'region3Id']
+// };
+//
+// const defaultValue = {
+//     region: '地区',
+//     region1Id: null,
+//     region2Id: null,
+//     region3Id: null,
+// };
+
+// 将信息抽象成几个 maps ，这样我们要用的时候只是把 map 里的值拿过来就行
+// 而不需要写 if ... else ...，只要 if ... else ... 超过 5 个，一定要想办法优化掉。
+
 export const translate = (word) => {
     const salt = Math.random();
     const sign = md5(appId + word + salt + appSecret);
@@ -42,14 +64,8 @@ export const translate = (word) => {
                 }[] // 是一个对象数组
             }
             const object: BaiduResult = JSON.parse(string);
-            if (object.error_code) {
-                if (object.error_code === '52003') {
-                    console.log('用户认证失败');
-                } else if (object.error_code === '52004') {
-                    console.log('...');
-                } else {
-                    console.error(object.error_msg);
-                }
+            if (object.error_code in errorMap) {
+                console.error(errorMap[object.error_code] || object.error_msg);
                 process.exit(2); // 退出当前进程
                 // 随便给个不是 0 的数字即可
             } else {
