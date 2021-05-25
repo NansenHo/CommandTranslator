@@ -28,14 +28,26 @@ const errorMap = {
 export const translate = (word) => {
     const salt = Math.random();
     const sign = md5(appId + word + salt + appSecret);
+    let from, to;
+
+    if (/[a-zA-Z]/.test(word[0])) {
+        // 英译中
+        from = 'en';
+        to = 'zh';
+    } else {
+        // 中译英
+        from = 'zh';
+        to = 'en';
+    }
 
     const query: string = querystring.stringify({
         q: word,
-        from: 'en',
-        to: 'zh',
         appid: appId,
-        salt: salt,
-        sign: sign
+        // from: from, to: to, salt: salt, sign: sign
+        from,
+        to,
+        salt,
+        sign,
     });
 
     const options = {
@@ -69,7 +81,9 @@ export const translate = (word) => {
                 process.exit(2); // 退出当前进程
                 // 随便给个不是 0 的数字即可
             } else {
-                console.log(object.trans_result[0].dst);
+                object.trans_result.map(obj => {
+                    console.log(obj.dst);
+                })
                 process.exit(0); // 0 表示没有错误
             }
         });

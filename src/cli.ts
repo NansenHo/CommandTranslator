@@ -9,7 +9,7 @@ program
     .usage('<English>')
     .arguments('<English>')
     .action(function (english) {
-        translate('hello')
+        translate(english)
     });
 
 program.parse(process.argv);
