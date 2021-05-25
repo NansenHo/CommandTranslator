@@ -1,7 +1,13 @@
 {
-  "name": "CommandTranslator",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "command-translator-nansen",
+  "version": "0.0.2",
+  "main": "dist/main.js",
+  "files": [
+    "dist/**/*.js"
+  ],
+  "bin": {
+    "ct": "dist/cli.js"
+  },
   "scripts": {
     "start": "ts-node-dev src/main.ts"
   },

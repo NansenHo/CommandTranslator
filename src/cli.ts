@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+// 这里加 shebang 是为了让 cli.js 里面也有这个 shebang
 import * as commander from 'commander';
 import {translate} from './main';
 

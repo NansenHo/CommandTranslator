@@ -3,7 +3,11 @@ import * as querystring from 'querystring';
 import md5 = require('md5');
 import {appId, appSecret} from './private';
 
-const errorMap = {
+type errorMap = {
+    [key: string]: string
+}
+
+const errorMap: errorMap = {
     52003: '用户认证失败',
     52004: 'error2',
     52005: 'error3',
@@ -25,7 +29,7 @@ const errorMap = {
 // 将信息抽象成几个 maps ，这样我们要用的时候只是把 map 里的值拿过来就行
 // 而不需要写 if ... else ...，只要 if ... else ... 超过 5 个，一定要想办法优化掉。
 
-export const translate = (word) => {
+export const translate = (word: string) => {
     const salt = Math.random();
     const sign = md5(appId + word + salt + appSecret);
     let from, to;
@@ -58,25 +62,25 @@ export const translate = (word) => {
     };
 
     const request = https.request(options, (response) => {
-        let chunks = [];
-        response.on('data', (chunk) => {
+        let chunks: Buffer[] = [];
+        response.on('data', (chunk: Buffer) => {
             chunks.push(chunk);
             // data : 每次下载得到的数据
         });
         response.on('end', () => {
             const string = Buffer.concat(chunks).toString();
             type BaiduResult = { // 类型别名
-                error_code?: string, // error_code 可能没有，但如果有就一定是字符串
-                error_msg?: string,
-                form: string,
-                to: string,
+                error_code?: string; // error_code 可能没有，但如果有就一定是字符串
+                error_msg?: string;
+                form: string;
+                to: string;
                 trans_result: {
                     src: string;
                     dst: string;
                 }[] // 是一个对象数组
             }
             const object: BaiduResult = JSON.parse(string);
-            if (object.error_code in errorMap) {
+            if (object.error_code) {
                 console.error(errorMap[object.error_code] || object.error_msg);
                 process.exit(2); // 退出当前进程
                 // 随便给个不是 0 的数字即可
