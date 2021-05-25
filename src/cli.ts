@@ -9,7 +9,6 @@ program
     .usage('<English>')
     .arguments('<English>')
     .action(function (english) {
-        console.log('english:' + english)
         translate('hello')
     });
 
